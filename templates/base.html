@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Student Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'students/css/style.css' %}">
+</head>
+<body>
+    <header class="navbar">
+        <div class="navbar-inner">
+            <a href="{% url 'student-list' %}" class="brand">🎓 Student MS</a>
+            <nav>
+                <a href="{% url 'student-list' %}">Students</a>
+                <a href="{% url 'student-add' %}" class="btn-nav">+ Add Student</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    <li class="message {{ message.tags }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="footer">
+        <p>Student Database Management System &mdash; built with Django &amp; PostgreSQL</p>
+    </footer>
+</body>
+</html>
