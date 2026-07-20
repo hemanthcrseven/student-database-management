@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}All Students{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>Students</h1>
+    <span class="badge">{{ total_count }} total</span>
+</div>
+
+<form method="get" class="search-bar">
+    {{ search_form.q }}
+    {{ search_form.department }}
+    <button type="submit" class="btn btn-primary">Search</button>
+    {% if request.GET.q or request.GET.department %}
+        <a href="{% url 'student-list' %}" class="btn btn-secondary">Clear</a>
+    {% endif %}
+</form>
+
+{% if students %}
+<div class="table-wrapper">
+    <table class="student-table">
+        <thead>
+            <tr>
+                <th>Roll No</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>City</th>
+                <th>Department</th>
+                <th>Year</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.roll_number }}</td>
+                <td><a href="{% url 'student-detail' student.pk %}">{{ student.name }}</a></td>
+                <td>{{ student.age }}</td>
+                <td>{{ student.city }}</td>
+                <td>{{ student.get_department_display }}</td>
+                <td>{{ student.year_of_study }}</td>
+                <td class="actions">
+                    <a href="{% url 'student-detail' student.pk %}" class="link-view">View</a>
+                    <a href="{% url 'student-edit' student.pk %}" class="link-edit">Edit</a>
+                    <a href="{% url 'student-delete' student.pk %}" class="link-delete">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+<div class="empty-state">
+    <p>No students found.</p>
+    <a href="{% url 'student-add' %}" class="btn btn-primary">Add your first student</a>
+</div>
+{% endif %}
+{% endblock %}

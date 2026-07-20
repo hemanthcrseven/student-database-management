@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}{{ student.name }}{% endblock %}
+
+{% block content %}
+<div class="detail-card">
+    <div class="detail-header">
+        <h1>{{ student.name }}</h1>
+        <span class="badge">{{ student.roll_number }}</span>
+    </div>
+
+    <dl class="detail-list">
+        <dt>Age</dt><dd>{{ student.age }}</dd>
+        <dt>Gender</dt><dd>{{ student.get_gender_display|default:"—" }}</dd>
+        <dt>City</dt><dd>{{ student.city }}</dd>
+        <dt>Department</dt><dd>{{ student.get_department_display }}</dd>
+        <dt>Year of Study</dt><dd>{{ student.year_of_study }}</dd>
+        <dt>Email</dt><dd>{{ student.email|default:"—" }}</dd>
+        <dt>Phone</dt><dd>{{ student.phone|default:"—" }}</dd>
+        <dt>Date of Admission</dt><dd>{{ student.date_of_admission|default:"—" }}</dd>
+    </dl>
+
+    <div class="form-actions">
+        <a href="{% url 'student-edit' student.pk %}" class="btn btn-primary">Edit</a>
+        <a href="{% url 'student-delete' student.pk %}" class="btn btn-danger">Delete</a>
+        <a href="{% url 'student-list' %}" class="btn btn-secondary">Back to list</a>
+    </div>
+</div>
+{% endblock %}
